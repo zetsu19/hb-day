@@ -189,6 +189,15 @@ export default function PremiumBirthdayCake() {
               priority
               className="drop-shadow-2xl select-none pointer-events-none rounded-xl"
             />
+            <button
+              onClick={handleBlow}
+              className="hidden md:block mt-4 text-2xl md:text-2xl font-extrabold text-pink-400 drop-shadow-[0_0_20px_rgba(255,20,147,0.8)] animate-pulse"
+            >
+              BLOW
+            </button>
+            <div className="block md:hidden mt-4 text-2xl md:text-2xl font-extrabold text-pink-400 drop-shadow-[0_0_20px_rgba(255,20,147,0.8)] animate-pulse">
+              BLOW
+            </div>
           </div>
         </div>
         <div className="mt-16 text-center space-y-6">
@@ -207,10 +216,10 @@ export default function PremiumBirthdayCake() {
 
           {showText && (
             <button
+              className="fixed bottom-8 mt-10 right-8 bg-[#c92a2a] text-white px-6 py-2 rounded-full font-bold shadow-lg hover:bg-red-700 transition-colors"
               onClick={() => router.push("/yesOfCourse")}
-              className="px-12 py-4 bg-pink-400 text-white font-black rounded-full shadow-lg hover:shadow-xl transition-transform active:scale-95"
             >
-              NEXT
+              Буцах ←
             </button>
           )}
         </div>

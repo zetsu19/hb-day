@@ -102,13 +102,7 @@ export default function YesOfCourse() {
           </motion.button>
         ))}
       </motion.div>
-      <Image
-        src="/kitty.gif"
-        alt="Footer"
-        width={200}
-        height={100}
-        className="mt-5"
-      />
+      <Image src="/kitty.gif" alt="Footer" width={200} height={100} />
     </div>
   );
 }
