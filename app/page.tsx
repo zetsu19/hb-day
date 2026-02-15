@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 export default function PremiumBirthdayCake() {
   const [isLit, setIsLit] = useState(true);
@@ -10,7 +11,6 @@ export default function PremiumBirthdayCake() {
   const dataArrayRef = useRef<Uint8Array | null>(null);
   const animationRef = useRef<number | null>(null);
 
-  // your original button function (unchanged)
   const handleBlow = () => {
     if (!isLit) {
       setIsLit(true);
@@ -21,7 +21,6 @@ export default function PremiumBirthdayCake() {
     setTimeout(() => setShowText(true), 600);
   };
 
-  // MICROPHONE BLOW DETECTION (ADDED)
   useEffect(() => {
     let audioContext: AudioContext;
     let microphone: MediaStreamAudioSourceNode;
@@ -65,7 +64,6 @@ export default function PremiumBirthdayCake() {
 
       const volume = Math.sqrt(sum / dataArray.length);
 
-      // BLOW THRESHOLD (adjust if needed)
       if (volume > 20 && isLit) {
         setIsLit(false);
         setTimeout(() => setShowText(true), 600);
@@ -83,8 +81,11 @@ export default function PremiumBirthdayCake() {
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-[#0f172a] overflow-hidden">
+      {/* glow background */}
       <div
-        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${isLit ? "opacity-40" : "opacity-0"}`}
+        className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+          isLit ? "opacity-40" : "opacity-0"
+        }`}
         style={{
           background:
             "radial-gradient(circle at center, #fbbf24 0%, transparent 70%)",
@@ -93,55 +94,42 @@ export default function PremiumBirthdayCake() {
 
       <div className="relative z-10 flex flex-col items-center">
         <div className="relative mt-20">
-          <div className="absolute left-1/2 -translate-x-1/2 -top-24 z-30 flex flex-col items-center">
+          {/* candle */}
+          <div className="absolute left-1/2 -translate-x-1/2 -top-8 z-30 flex flex-col items-center">
             <div className="h-16 flex items-end justify-center mb-1">
               {isLit ? (
                 <div className="relative">
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-16 bg-orange-500/40 blur-xl animate-pulse" />
+
                   <div className="w-4 h-10 bg-gradient-to-t from-orange-600 via-yellow-400 to-white rounded-full animate-flame-physics shadow-[0_0_15px_#f59e0b]" />
+
                   <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-blue-500/60 rounded-full blur-[2px]" />
                 </div>
               ) : (
-                <div className="flex flex-col items-center animate-smoke">
-                  <div className="w-1 h-12 bg-white/20 blur-sm rounded-full" />
-                </div>
+                <div className="flex flex-col items-center animate-smoke"></div>
               )}
             </div>
 
-            <div className="relative w-4 h-16 rounded-sm overflow-hidden shadow-lg bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600">
-              <div className="absolute inset-0 opacity-30 bg-[repeating-linear-gradient(45deg,transparent,transparent_5px,#fff_5px,#fff_10px)]" />
+            <div className="relative w-4 h-16 rounded-sm overflow-hidden shadow-lg bg-[#DC143C]">
+              <div className="absolute inset-0 opacity-20 bg-[repeating-linear-gradient(45deg,transparent,transparent_4px,#fff_4px,#fff_8px)]" />
               <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-gray-900 rounded-full" />
             </div>
           </div>
 
+          {/* CAKE IMAGE */}
           <div className="relative flex flex-col items-center">
-            <div className="w-64 h-24 bg-[#fff1f2] rounded-[100%] z-20 shadow-[inset_0_-10px_20px_rgba(0,0,0,0.1)] flex items-center justify-center border-b-4 border-pink-100">
-              <div
-                className="absolute inset-0 opacity-40 pointer-events-none"
-                style={{
-                  backgroundImage: `radial-gradient(#ec4899 2px, transparent 2px), radial-gradient(#3b82f6 2px, transparent 2px)`,
-                  backgroundSize: "20px 20px",
-                  backgroundPosition: "0 0, 10px 10px",
-                }}
-              />
-            </div>
-
-            <div className="w-64 h-32 -mt-12 bg-gradient-to-b from-[#f472b6] to-[#db2777] rounded-b-[20px] shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full flex justify-around">
-                {[...Array(8)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-8 bg-[#fff1f2] rounded-b-full shadow-md transition-all duration-500"
-                    style={{ height: `${20 + Math.sin(i) * 10}px` }}
-                  />
-                ))}
-              </div>
-            </div>
-
-            <div className="w-[340px] h-10 bg-gradient-to-b from-gray-200 to-gray-400 rounded-[100%] -mt-6 shadow-xl border-t border-white/50" />
+            <Image
+              src="/chocolateCake.png"
+              alt="Chocolate Cake"
+              width={320}
+              height={320}
+              priority
+              className="drop-shadow-2xl select-none pointer-events-none"
+            />
           </div>
         </div>
 
+        {/* text */}
         <div className="mt-16 text-center space-y-6">
           <div
             className={`transition-all duration-1000 transform ${
@@ -170,6 +158,7 @@ export default function PremiumBirthdayCake() {
         </div>
       </div>
 
+      {/* animations */}
       <style jsx>{`
         @keyframes flame-physics {
           0%,
@@ -205,8 +194,7 @@ export default function PremiumBirthdayCake() {
         }
 
         .animate-flame-physics {
-          animation: flame-physics 0.6s infinite alternate ease-in-out;
-          transform-origin: bottom center;
+          animation: flame-physics 1s infinite alternate ease-in-out; /* was 0.6s */
         }
 
         .animate-smoke {
